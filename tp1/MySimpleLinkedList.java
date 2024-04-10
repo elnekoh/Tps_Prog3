@@ -54,7 +54,6 @@ public class MySimpleLinkedList<T> {
 	@Override
 	public String toString() {
 		String respuesta= "[";
-		Boolean primerIteracion = true;
 		Node<T> actual = this.first;
 
 		for(int i = 0; i < this.size(); i++){ 
@@ -68,4 +67,32 @@ public class MySimpleLinkedList<T> {
 		return respuesta+"]";
 	}
 	
+	public int indexOf(T info){
+		int respuesta = -1;
+		int contador = 0;
+		Node<T> actual = this.first;
+
+		/*
+		for(int i = 0; i < this.size(); i++){ 
+			if(actual.getInfo() == info){
+				respuesta = contador;
+				break;
+			}else{
+				contador++;
+				actual = actual.getNext();
+			}
+		}
+		*/
+
+		while(respuesta == -1 && contador < this.size()){
+			if(actual.getInfo() == info){
+				respuesta = contador;
+			}else{
+				actual = actual.getNext();
+				contador++;
+			}
+		}
+
+		return respuesta;
+	}
 }
