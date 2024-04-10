@@ -1,5 +1,7 @@
 package ProgramacionIII.tp1;
 
+import org.w3c.dom.Node;
+
 public class MySimpleLinkedList<T> {
 	
 	private Node<T> first;
@@ -9,22 +11,26 @@ public class MySimpleLinkedList<T> {
 		this.first = null;
 	}
 	
-	public void insertFront(T info) { // O(1)
+	// O(1)
+	public void insertFront(T info) { 
 		Node<T> tmp = new Node<T>(info,null);
 		tmp.setNext(this.first);
 		this.first = tmp;
 		this.size++;
 	}
 	
+	// O(1)
 	public T extractFront() { // O(1)
 		return this.getFirst().getInfo();
 	}
 
+	// O(1)
 	public boolean isEmpty() { // O(1)
 		return this.first == null;
 	}
 	
-	public T get(int index) { // O(n) (ya que tendrá que recorrer TODA la lista para llegar al indice deseado)
+	// O(n) (ya que tendrá que recorrer TODA la lista para llegar al indice deseado)
+	public T get(int index) { 
 		Node<T> actual = this.first;
 		
 		if(index < 0) {
@@ -39,14 +45,27 @@ public class MySimpleLinkedList<T> {
 		return actual.getInfo();
 	}
 	
-	public int size() { // O(1)
+	// O(1)
+	public int size() { 
 		return this.size;
 	}
 	
+	// O(n) (ya que tendrá que recorrer TODA la lista para imprimir cada elemento)
 	@Override
 	public String toString() {
-		// TODO
-		return "";
+		String respuesta= "[";
+		Boolean primerIteracion = true;
+		Node<T> actual = this.first;
+
+		for(int i = 0; i < this.size(); i++){ 
+			respuesta = actual.getInfo().toString();
+			if (i != this.size()-1) {
+				respuesta = respuesta + ", ";
+				actual = actual.getNext();
+			}
+		}
+
+		return respuesta+"]";
 	}
 	
 }
