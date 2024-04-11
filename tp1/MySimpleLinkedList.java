@@ -12,8 +12,8 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 	// O(1)
 	public void insertFront(T info) { 
 		Node<T> tmp = new Node<T>(info,null);
-		tmp.setNext(this.first);
-		this.first = tmp;
+		tmp.setNext(this.getFirst());
+		this.setFirst(tmp);
 		this.size++;
 	}
 	
@@ -24,12 +24,12 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 
 	// O(1)
 	public boolean isEmpty() { // O(1)
-		return this.first == null;
+		return this.getFirst() == null;
 	}
 	
 	// O(n) (ya que tendrá que recorrer TODA la lista para llegar al indice deseado)
 	public T get(int index) { 
-		Node<T> actual = this.first;
+		T respuesta = null;
 		
 		if(index < 0) {
 			throw new IndexOutOfBoundsException("Indice no valido");
@@ -37,10 +37,15 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 			throw new IndexOutOfBoundsException("El indice supera el tamaño de la lista");
 		}
 
-		for(int i = 0; i < index; i++){ 
-			actual = actual.getNext();
+		for (T i : this){
+			if(index == 0){
+				respuesta = i;
+				break;
+			}
+			index--;
 		}
-		return actual.getInfo();
+
+		return respuesta;
 	}
 	
 	// O(1)
@@ -52,8 +57,16 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 	@Override
 	public String toString() {
 		String respuesta= "[";
-		Node<T> actual = this.first;
-
+		int contador = 0;
+		
+		for (T i : this){
+			respuesta = respuesta + i.toString();
+			if(contador != this.size()-1) {
+				respuesta = respuesta + ", ";
+			}
+		}
+		/*
+		Node<T> actual = this.getFirst();
 		for(int i = 0; i < this.size(); i++){ 
 			respuesta = actual.getInfo().toString();
 			if (i != this.size()-1) {
@@ -61,16 +74,27 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 				actual = actual.getNext();
 			}
 		}
+		*/
 
 		return respuesta+"]";
 	}
-	
+
+	// O(n) (ya que tendrá que recorrer TODA la lista para encontrar el elemento deseado)
 	public int indexOf(T info){
 		int respuesta = -1;
 		int contador = 0;
-		Node<T> actual = this.first;
+
+		for (T i : this){
+			if(i.equals(info)){
+				respuesta = contador;
+				break;
+			}
+			contador++;
+		}
 
 		/*
+		Node<T> actual = this.getFirst();
+
 		for(int i = 0; i < this.size(); i++){ 
 			if(actual.getInfo().equals(info)){
 				respuesta = contador;
@@ -80,7 +104,7 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 				actual = actual.getNext();
 			}
 		}
-		*/
+		
 
 		while(respuesta == -1 && contador < this.size()){
 			if(actual.getInfo().equals(info)){
@@ -90,12 +114,21 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 				contador++;
 			}
 		}
+		*/
 
 		return respuesta;
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return new MyIterator<T>(this.first);
+		return new MyIterator<T>(this.getFirst());
+	}
+
+	public Node<T> getFirst() {
+		return this.first;
+	}
+
+	public void setFirst(Node<T> first) {
+		this.first = first;
 	}
 }
