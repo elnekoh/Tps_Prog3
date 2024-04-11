@@ -1,5 +1,3 @@
-package ProgramacionIII.tp1;
-
 public class Node<T> {
 
 	private T info;

@@ -1,8 +1,6 @@
-package ProgramacionIII.tp1;
+import java.util.Iterator;
 
-import org.w3c.dom.Node;
-
-public class MySimpleLinkedList<T> {
+public class MySimpleLinkedList<T> implements Iterable<T>{
 	
 	private Node<T> first;
 	private int size = 0;
@@ -74,7 +72,7 @@ public class MySimpleLinkedList<T> {
 
 		/*
 		for(int i = 0; i < this.size(); i++){ 
-			if(actual.getInfo() == info){
+			if(actual.getInfo().equals(info)){
 				respuesta = contador;
 				break;
 			}else{
@@ -85,7 +83,7 @@ public class MySimpleLinkedList<T> {
 		*/
 
 		while(respuesta == -1 && contador < this.size()){
-			if(actual.getInfo() == info){
+			if(actual.getInfo().equals(info)){
 				respuesta = contador;
 			}else{
 				actual = actual.getNext();
@@ -94,5 +92,10 @@ public class MySimpleLinkedList<T> {
 		}
 
 		return respuesta;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new MyIterator<T>(this.first);
 	}
 }
