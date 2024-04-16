@@ -64,6 +64,7 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 			if(contador != this.size()-1) {
 				respuesta = respuesta + ", ";
 			}
+			contador++;
 		}
 		/*
 		Node<T> actual = this.getFirst();
