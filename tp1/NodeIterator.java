@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class NodeIterator<T> implements Iterator<Node<T>> {
+public class NodeIterator<T extends Comparable<T>> implements Iterator<Node<T>> {
     private Node<T> cursor;
 
     public NodeIterator(Node<T> cursor){

@@ -38,11 +38,11 @@ public class Main {
     }
 
     
-    public static <T> MySimpleLinkedList<T> ejercicio5a(MySimpleLinkedList<T> lista1, MySimpleLinkedList<T> lista2) {
+    public static <T extends Comparable<T>> MySimpleLinkedList<T> ejercicio5a(MySimpleLinkedList<T> lista1, MySimpleLinkedList<T> lista2) {
         MySimpleLinkedList<T> respuesta = new MySimpleLinkedList<T>();
         for(Node<T> i : lista1){ 
             if(lista2.indexOf(i.getInfo()) != -1){
-                respuesta.insertFront(i.getInfo()); 
+                respuesta.insertInOrder(i.getInfo());
             }
         }
         return respuesta;

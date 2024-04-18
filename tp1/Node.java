@@ -1,4 +1,4 @@
-public class Node<T> {
+public class Node<T extends Comparable<T>> implements Comparable <Node<T>>{
 
 	private T info;
 	private Node<T> next;
@@ -27,6 +27,11 @@ public class Node<T> {
 
 	public void setInfo(T info) {
 		this.info = info;
+	}
+
+	@Override
+	public int compareTo(Node<T> node) {
+		return this.getInfo().compareTo(node.getInfo());
 	}
 
 }
