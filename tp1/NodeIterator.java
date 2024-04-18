@@ -1,9 +1,9 @@
 import java.util.Iterator;
 
-public class MyIterator<T> implements Iterator<T> {
+public class NodeIterator<T> implements Iterator<Node<T>> {
     private Node<T> cursor;
 
-    public MyIterator(Node<T> cursor){
+    public NodeIterator(Node<T> cursor){
         this.cursor = cursor;
     }
 
@@ -13,9 +13,9 @@ public class MyIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public T next() {
-        T info = this.cursor.getInfo();
+    public Node<T> next() {
+        Node<T> node = this.cursor;
         this.cursor = this.cursor.getNext();
-        return info;
+        return node;
     }
 }

@@ -1,8 +1,9 @@
 import java.util.Iterator;
 
-public class MySimpleLinkedList<T> implements Iterable<T>{
+public class MySimpleLinkedList<T> implements Iterable<Node<T>>{
 	
 	private Node<T> first;
+	private Node<T> last;
 	private int size = 0;
 	
 	public MySimpleLinkedList() {
@@ -15,6 +16,57 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 		tmp.setNext(this.getFirst());
 		this.setFirst(tmp);
 		this.size++;
+		if(this.size == 1){
+			this.setLast(tmp);
+		}
+	}
+
+	public void insertEnd(T info) { 
+		Node<T> tmp = new Node<T>(info,null);
+		this.last.setNext(tmp);
+		this.setLast(tmp);
+		this.size++;
+	}
+	
+	public Node<T> getLast() {
+		return this.last;
+	}
+
+	public void setLast(Node<T> last) {
+		this.last = last;
+	}
+
+	public void insert(T info, int index) {
+		if(index == this.size()){
+			this.insertEnd(info);
+			return;
+		}
+		this.validateIndex(index);
+		if(index == 0){
+			this.insertFront(info);
+			return;
+		}
+		if(index == this.size()){
+			this.insertEnd(info);
+			return;
+		}
+		for (Node<T> i : this){
+			if(index == 1){
+				Node<T> newNode = new Node<T>(info, i.getNext());
+				i.setNext(newNode);
+				this.size++;
+				break;
+			}
+			index--;
+		}
+	}
+
+	private void validateIndex(int index) {
+		if(index < 0) {
+			throw new IndexOutOfBoundsException("Indice no valido");
+		}else if(index >= this.size()){
+			throw new IndexOutOfBoundsException("El indice supera el tamaño de la lista");
+		}
 	}
 	
 	// O(1)
@@ -31,15 +83,11 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 	public T get(int index) { 
 		T respuesta = null;
 		
-		if(index < 0) {
-			throw new IndexOutOfBoundsException("Indice no valido");
-		}else if(index >= this.size()){
-			throw new IndexOutOfBoundsException("El indice supera el tamaño de la lista");
-		}
+		this.validateIndex(index);
 
-		for (T i : this){
+		for (Node<T> i : this){
 			if(index == 0){
-				respuesta = i;
+				respuesta = i.getInfo();
 				break;
 			}
 			index--;
@@ -59,8 +107,8 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 		String respuesta= "[";
 		int contador = 0;
 		
-		for (T i : this){
-			respuesta = respuesta + i.toString();
+		for (Node<T> i : this){
+			respuesta = respuesta + i.getInfo().toString();
 			if(contador != this.size()-1) {
 				respuesta = respuesta + ", ";
 			}
@@ -85,8 +133,8 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 		int respuesta = -1;
 		int contador = 0;
 
-		for (T i : this){
-			if(i.equals(info)){
+		for (Node<T> i : this){
+			if(i.getInfo().equals(info)){
 				respuesta = contador;
 				break;
 			}
@@ -121,9 +169,11 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
 	}
 
 	@Override
-	public Iterator<T> iterator() {
-		return new MyIterator<T>(this.getFirst());
+	public Iterator<Node<T>> iterator() {
+		return new NodeIterator<T>(this.getFirst());
 	}
+
+
 
 	public Node<T> getFirst() {
 		return this.first;
