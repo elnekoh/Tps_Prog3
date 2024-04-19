@@ -23,7 +23,11 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<Nod
 
 	public void insertEnd(T info) { 
 		Node<T> tmp = new Node<T>(info,null);
-		this.last.setNext(tmp);
+		if(this.isEmpty()){
+			this.setFirst(tmp);
+		}else{
+			this.getLast().setNext(tmp);
+		}
 		this.setLast(tmp);
 		this.size++;
 	}

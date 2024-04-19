@@ -7,6 +7,10 @@ public class NodeIterator<T extends Comparable<T>> implements Iterator<Node<T>> 
         this.cursor = cursor;
     }
 
+    public Node<T> getCursor() {
+        return cursor;
+    }
+
     @Override
     public boolean hasNext() {
         return cursor != null;
