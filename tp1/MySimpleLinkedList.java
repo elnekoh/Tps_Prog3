@@ -27,7 +27,7 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<Nod
 			this.setFirst(tmp);
 		}else{
 			this.getLast().setNext(tmp);
-		}
+		}	
 		this.setLast(tmp);
 		this.size++;
 	}
